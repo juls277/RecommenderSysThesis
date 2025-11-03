@@ -19,12 +19,12 @@
       movies.forEach(movie => {
         const li = document.createElement('li');
         const a = document.createElement('a');
-        
+
          a.href = movie._links.self.href;             // set the link
          a.textContent = movie.title;                 // link text = movie title
-
-        list.appendChild(li);
         list.appendChild(a);
+        list.appendChild(li);
+       
       });
 
     })
