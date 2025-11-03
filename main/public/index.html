@@ -66,8 +66,8 @@
   .then(movies => {
     const grid = document.getElementById('movie-list');
     const startTime = Date.now();
-
-    movies.forEach(movie => {
+    //i added this slicing here cos my brother constanly freezes if it loads all data set with layouts and stuff
+    movies.slice(0,100).forEach(movie => {
       const card = document.createElement('div');
       card.className = 'card';
 
