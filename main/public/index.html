@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Movie List</title>
+</head>
+<body>
+  <h1>Movies</h1>
+  <ul id="movie-list"></ul>
+
+<script>
+    //fecth movies 
+    fetch('/movies')
+        .then(res=>res.json())
+        .then(movies => {
+        const list = document.getElementById('movie-list');})
+
+
+
+</script>
+</body>
+</html>
