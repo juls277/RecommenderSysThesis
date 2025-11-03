@@ -9,6 +9,7 @@
   <ul id="movie-list"></ul>
 
 <script>
+  const startTime = Date.now();
     //fecth movies 
     fetch('/movies')
     .then(res => res.json())
@@ -16,15 +17,51 @@
       const list = document.getElementById('movie-list');
 
       //dynamic update of movie list
+
       movies.forEach(movie => {
         const li = document.createElement('li');
         const a = document.createElement('a');
 
          a.href = movie._links.self.href;             // set the link
          a.textContent = movie.title;                 // link text = movie title
-        list.appendChild(a);
+        li.appendChild(a);
         list.appendChild(li);
+
+
+        a.addEventListener('click', (e)=>{
+          //e.preventDefault();
+          const secondsSpent = Math.floor((Date.now()-startTime) / 1000);
+
+        //store user session in localStorage 
+
+
+        //create
+
+        const session = JSON.parse(localStorage.getItem('sessionHistory')) || {
+        visitedItems: [],
+        clicks: [],
+        timeSpent: {}
+        };
+
+        //push
+
+
+        session.visitedItems.push(movie.id);
+        session.clicks.push(`item_${movie.id}`);
+        session.timeSpent[`item_${movie.id}`] = secondsSpent;
+
+        //save
+
+
+        localStorage.setItem('sessionHistory', JSON.stringify(session));
+        //just for now so i see what it stores in session
+        console.log('Saved session:', session);
+
        
+        });
+
+        
+        
       });
 
     })
