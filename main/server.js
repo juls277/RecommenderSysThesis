@@ -1,6 +1,8 @@
 const express = require('express');
 const fs = require('fs');
 const app = express();
+const path = require('path');
+app.use(express.static(path.join(__dirname, 'public')));
 const PORT = 3000;
 
 // Load movies from JSON file
