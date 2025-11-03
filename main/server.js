@@ -14,6 +14,15 @@ fs.readFile('./movies.json', 'utf8', (err, data) => {
     return;
   }
   movies = JSON.parse(data);
+  const rawMovies = JSON.parse(data);
+
+  /* Clean poster paths 
+  movies = rawMovies.map(movie => {
+    if (typeof movie.poster_path === 'string') {
+      movie.poster_path = movie.poster_path.replace(/\\/g, '');
+    }
+    return movie;
+  });*/
 });
 
 // Endpoint: GET /movies — list all movies
