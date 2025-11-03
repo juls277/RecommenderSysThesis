@@ -15,11 +15,18 @@
     .then(movies => {
       const list = document.getElementById('movie-list');
 
+      //dynamic update of movie list
       movies.forEach(movie => {
         const li = document.createElement('li');
-        li.textContent = movie.title;
+        const a = document.createElement('a');
+        
+         a.href = movie._links.self.href;             // set the link
+         a.textContent = movie.title;                 // link text = movie title
+
         list.appendChild(li);
+        list.appendChild(a);
       });
+
     })
     .catch(error => {
       console.error('Error fetching movies:', error);
