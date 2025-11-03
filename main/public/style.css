@@ -1,0 +1,48 @@
+
+    /*dark-theme*/
+    body {
+      margin: 0;
+      background-color: #141414;
+      color: #fff;
+      font-family: Arial, sans-serif;
+    }
+
+    h1 {
+      padding: 20px;
+      font-size: 32px;
+    }
+
+    /*grid layout for movie cards*/
+    .movie-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 20px;
+      padding: 0 20px 40px;
+    }
+
+    /*each card*/
+    .card {
+      background-color: #1e1e1e;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    .card img {
+      width: 100%;
+      height: 225px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .card-title {
+      padding: 10px;
+      font-size: 14px;
+      text-align: center;
+    }
