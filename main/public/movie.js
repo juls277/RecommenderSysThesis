@@ -4,6 +4,8 @@ const movieId = urlParams.get('id');
 const startTime = Date.now();
 
 
+
+
 fetch(`/movies/${movieId}`)
   .then(res => res.json())
   .then(movie=>{
@@ -12,6 +14,7 @@ fetch(`/movies/${movieId}`)
     document.getElementById('movie-id').textContent = `Movie ID: ${movie.id}`;
     document.getElementById('movie-overview').textContent = movie.overview || 'No description available';
     document.getElementById('movie-release').textContent = `Release Date: ${movie.release_date || 'Unknown'}`;
+
     
   })
   .catch(error => {
@@ -21,6 +24,8 @@ fetch(`/movies/${movieId}`)
    window.addEventListener('load', () => {
       const session = JSON.parse(localStorage.getItem('sessionHistory'));
      console.log('Current session on load:', session);
+     
+    getMovies();
     });
   // when user leaves or closes the page
   window.addEventListener('beforeunload', () => {
@@ -38,4 +43,35 @@ fetch(`/movies/${movieId}`)
 
   localStorage.setItem('sessionHistory', JSON.stringify(session));
   console.log('Saved session:', session);
+
+  
   });
+
+ //starting recommendation logic 
+
+ 
+
+ async function getMovies(){
+  const session = JSON.parse(localStorage.getItem('sessionHistory')) || {
+    visitedItems:[],
+    timeSpent:{}
+  } 
+  const watchedIds = session.visitedItems || [];
+
+  try{
+    const res = await fetch('/movies');
+    const allMovies = await res.json();
+    
+
+    const watchedMovies = allMovies.filter(m => watchedIds.includes(m.id));
+    const unWatchedMovies = allMovies.filter(m => !watchedIds.includes(m.id));
+
+    console.log("Watched:", watchedMovies);
+    //console.log("Recommend from:", unWatchedMovies);
+
+
+  } catch(err){
+    console.log("couldnt fetch")
+  }
+
+ }
