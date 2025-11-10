@@ -27,7 +27,6 @@ fetch(`/movies/${movieId}`)
   const secondsSpent = Math.floor((Date.now() - startTime) / 1000);
   const session = JSON.parse(localStorage.getItem('sessionHistory')) || {
     visitedItems: [],
-    clicks: [],
     timeSpent: {}
   };
 

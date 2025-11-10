@@ -38,13 +38,11 @@ window.addEventListener('load', () => {
 
         const session = JSON.parse(localStorage.getItem('sessionHistory')) || {
           visitedItems: [],
-          clicks: [],
           timeSpent: {}
         };
 
         session.visitedItems.push(movie.id);
-        session.clicks.push(`item_${movie.id}`);
-        //localStorage.setItem('sessionHistory', JSON.stringify(session));
+        
 
         localStorage.setItem('sessionHistory', JSON.stringify(session));
         console.log('Saved session:', session);
