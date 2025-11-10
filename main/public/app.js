@@ -5,6 +5,18 @@ window.addEventListener('load', () => {
   const session = JSON.parse(localStorage.getItem('sessionHistory'));
   console.log('Current session on load:', session);
 });
+//remove old clicks 
+window.addEventListener('load', () => {
+  const session = JSON.parse(localStorage.getItem('sessionHistory'));
+  if (session && session.clicks) {
+    delete session.clicks;
+    localStorage.setItem('sessionHistory', JSON.stringify(session));
+    console.log('Cleaned old clicks data:', session);
+  } else {
+    console.log('Session clean: no clicks found');
+  }
+});
+
 
 //fecth movies 
     fetch('/movies')
