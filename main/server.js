@@ -59,7 +59,7 @@ app.get('/movies/:id', (req, res) => {
   const movie = movies.find(m => m.movieId == req.params.id);
   if (!movie) return res.status(404).json({ error: 'Movie not found' });
 
-  // Parse genres safely
+ 
   let parsedGenres = [];
   try {
     parsedGenres = JSON.parse(
