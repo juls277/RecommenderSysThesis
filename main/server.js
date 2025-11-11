@@ -41,7 +41,7 @@ app.get('/movies', (req, res) => {
     }
 
     return {
-      id: movie.movieId || movie.id,
+      id: String(movie.movieId || movie.id),
       title: movie.title,
       genres: parsedGenres, 
       _links: {
@@ -71,7 +71,7 @@ app.get('/movies/:id', (req, res) => {
 
  
   res.json({
-    id: movie.movieId,
+    id: String(movie.movieId || movie.id),
     title: movie.title,
     genres: parsedGenres, 
     _links: {

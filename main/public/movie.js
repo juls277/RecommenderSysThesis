@@ -13,18 +13,18 @@ function updateSessionOnLoad(movieId) {
   const idString = String(movieId);
 
   
-  if (!session.visitedItems.includes(idString)) {
+ /* if (!session.visitedItems.includes(idString)) {
     session.visitedItems.push(idString);
     
-  }
+  }*/
 
  
   localStorage.setItem('sessionHistory', JSON.stringify(session));
-  console.log(' Session updated on load:', session);
+  console.log(' updatedSessionOnLoad:', session.visitedItems.slice(-5));
 }
 
 
-updateSessionOnLoad(movieId);
+//updateSessionOnLoad(movieId);
 
 
 
@@ -50,10 +50,15 @@ fetch(`/movies/${movieId}`)
   
    window.addEventListener('load', () => {
     
-      const session = JSON.parse(localStorage.getItem('sessionHistory'));
-     console.log('Current session on load:', session);
+    
+
+    updateSessionOnLoad(movieId);
      
+
+     
+   
     getMovies();
+ 
     
     });
   // when user leaves or closes the page
@@ -77,27 +82,34 @@ fetch(`/movies/${movieId}`)
  
 
  async function getMovies(){
+  
   const session = JSON.parse(localStorage.getItem('sessionHistory')) || {
     visitedItems:[],
     timeSpent:{}
   } 
   const watchedIds = session.visitedItems || [];
+  console.log("last 5 watched ids: ", watchedIds.slice(-5));
 
   try{
+   
+ 
+
     const res = await fetch('/movies');
     const allMovies = await res.json();
     
+  
+  /*const watchedMovies = watchedIds
+  .map(id => allMovies.find(m => String(m.id || m.movieId) === id))
+    */
+   const unWatchedMovies = allMovies.filter(m => !watchedIds.includes(String(m.id || m.movieId)));
+   const movieMap = new Map(
+  allMovies.map(m => [String(m.id || m.movieId), m])
+   );
+  const watchedMovies = watchedIds
+  .map(id => movieMap.get(id));
 
-    const watchedMovies = allMovies.filter(m => watchedIds.includes(String(m.id)));
-    const unWatchedMovies = allMovies.filter(m => !watchedIds.includes(String(m.id)));
-
-    console.log("Watched:", watchedMovies);
-    //console.log("Recommend from:", unWatchedMovies);
-   // const sim = genreSimilarity(watchedMovies[0], watchedMovies[1]);
-    //console.log("similarity", sim );
-   // return watchedMovies, unWatchedMovies;
+  console.log("Watched:", watchedMovies.slice(-5));
    
-
  
   const topRecommendations = generateRecommendation(watchedMovies, unWatchedMovies, genreSimilarity, 10);
 
